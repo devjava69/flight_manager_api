@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateFlightDto } from './dto/createFlight.dto';
 import { FlightService } from './flight.service';
 import { Flight } from './schemas/flight.schema';
+import { ReadFlightDto } from './dto/readFlight.dto';
 
 @Controller('Flight')
 export class FlightController {
@@ -22,5 +23,12 @@ export class FlightController {
     @Param('flightNumber') flightNumber: string,
   ): Promise<Flight | null> {
     return await this.flightService.findByFlightNumber(flightNumber);
+  }
+
+  @Get('/:flightExist')
+  async exist(
+    @Param('flightNumber') flightNumber: ReadFlightDto,
+  ): Promise<Flight | null> {
+    return await this.flightService.exist(flightNumber);
   }
 }
